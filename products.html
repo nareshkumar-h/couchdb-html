@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <h3>List Products</h3>
+    <table border="1">
+        <thead>
+            <tr>
+                <td>Sno</td>
+                <td>Product Name</td>
+            </tr>
+
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <script>
+        function getAllProducts() {
+            event.preventDefault();
+            //todo: Get Form Values
+            let user = { name: "naresh", email: "n@gmail.com", password: "pass123", role: "ADMIN" };
+            console.log(user);
+
+
+            axios.request({
+                url: "/products",
+                method: "post",
+                baseURL: "https://3d805feb-be8e-4768-ae9a-8832a6815b52-bluemix.cloudantnosqldb.appdomain.cloud",
+                auth: {
+                    username: "apikey-v2-1pmxjhdsh0d4ak075u5647quvlm30pwcuoacrodbx0k3",
+                    password: "482c19d97a455c9b057fafeca7169375"
+                },
+                data: user
+            }).then(function (res) {
+                console.log(res);
+            });
+        }
+    </script>
+</body>
+
+</html>

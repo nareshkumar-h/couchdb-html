@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous"></script>
+    <script>
+        const DB_URL = "https://8ac6220f-58f2-4fd8-af03-e81c258a7f0b-bluemix.cloudantnosqldb.appdomain.cloud";
+    </script>
+</head>
+
+<body>
+    <h3>Login</h3>
+    <form onsubmit="login()">
+        <button>Submit</button>
+    </form>
+    <script>
+        function login() {
+            event.preventDefault();
+            //todo: Get Form Values
+            let user = { email: "g1@gmail.com", password: "pass123-", role: "ADMIN" };
+            console.log(user);
+
+            //select _id,_rev,name,email,role from users where email=?1 and password=?2 and role=?3
+            let requestData = {
+                "selector": {
+                    "email": user.email,
+                    "password": user.password,
+                    "role": user.role
+                },
+                "fields": ["_id", "_rev", "name", "role"]
+            };
+
+            axios.request({
+                url: "/users/_find",
+                method: "post",
+                baseURL: DB_URL,
+                auth: {
+                    username: "apikey-v2-14ujhegslgodmumexb1pgbt9f458q50zlpqwo6ypclss",
+                    password: "31edca6cd3724c2a42277e2c71daa917"
+                },
+                data: requestData
+            }).then(function (res) {
+                let response = res.data;
+                console.log(response);
+                let users = response.docs;
+                console.log(JSON.stringify(users));
+
+                if (users.length == 0) {
+                    alert("Invalid Login Credentials");
+                }
+                else if (users.length > 0) {
+                    let user = users[0];
+                    localStorage.setItem("LOGGED_IN_USER", JSON.stringify(user));
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>
