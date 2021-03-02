@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"
+        integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ=="
+        crossorigin="anonymous"></script>
+    <script>
+        const DB_URL = "https://8ac6220f-58f2-4fd8-af03-e81c258a7f0b-bluemix.cloudantnosqldb.appdomain.cloud";
+    </script>
+    <script src="user-service.js"></script>
+</head>
+
+<body>
+    <h3>List Users</h3>
+    <script>
+        let userPromise = UserService.getAllUsers();
+        userPromise.then(res => {
+            let data = res.data.rows;
+            console.log(data);
+            let users = data.map(obj => obj.doc);
+            console.table(users);
+
+        });
+    </script>
+</body>
+
+</html>
